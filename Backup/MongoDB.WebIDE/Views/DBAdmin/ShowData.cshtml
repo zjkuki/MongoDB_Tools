@@ -1,0 +1,67 @@
+﻿@using MongoDB.WebIDE.Models
+@using MongoDB.Defination
+@model ShowDataModel	
+@section style{
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/Content/ztree/css/zTreeStyle.css")">
+}
+@section script{
+    <script src="@Url.Content("~/Content/ztree/js/jquery.ztree.core-3.5.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Content/js/common.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/showdata.js")" type="text/javascript"></script>
+}
+<input type="hidden" value="@Model.ID" id="hdId"/>
+<div class="PageTitle">
+    <i class="icon-inbox"></i>&nbsp;<strong class="text-info">@Model.Title</strong>
+</div>
+<div class="accordion mt10" id="accordion1">
+    <div class="accordion-group">
+        <div class="accordion-heading alert-success">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">表数据</a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <div class="form-inline">
+                    find:<input type="text" class="span5" id="txtFind1" />
+                    sort:<input type="text" class="span2" id="txtSort1" />
+                    skip:<input type="text" class="span1" id="txtSkip" />
+                    <label class="checkbox">
+                        <input type="checkbox" id="chkLimit" checked />limit:
+                    </label>
+                    <input type="text" class="span1" id="txtLimit" value="50" />
+                    <a class="btn btn-primary btn-small" id="btnFind">查询</a>
+                </div>
+                <table class="table table-bordered table-striped table-hover mt5">
+                    <tr>
+                        @{
+                            foreach (var field in Model.Fields)
+                            {
+                            <th>
+                                <span class="label label-info">@string.Format("{0} ({1})", field.Name, field.Type)</span>
+                            </th>
+                            }
+                        }
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-group">
+        <div class="accordion-heading alert-success">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo">执行计划</a>
+        </div>
+        <div id="collapseTwo" class="accordion-body collapse alert-info">
+            <div class="accordion-inner">
+                <div class="form-inline">
+                    find:<input type="text" class="span5" id="txtFind2" />
+                    sort:<input type="text" class="span2" id="txtSort2" />
+                    <a class="btn btn-primary btn-small" id="btnExplain">执行</a>
+                </div>
+                <ul id="explaintree" class="ztree">
+                </ul>
+            </div>
+        </div>
+    </div>
+	<div class="accordion-heading alert-success">
+		<a class="accordion-toggle" href="ShowInfo?id=@Model.TblID&type=@((int)MongoTreeNodeType.Collection)">返回【统计信息】</a>
+	</div>
+</div>

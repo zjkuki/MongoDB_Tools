@@ -1,0 +1,20 @@
+﻿@model HandleErrorInfo
+<br />
+<div class="container">
+	<div class="alert alert-error">
+		<h4>
+			Exception:</h4>
+		<br />
+		<p>
+			There was a <b>@Model.Exception.GetType().Name</b> while rendering <b>@Model.ControllerName</b>'s <b>@Model.ActionName</b> action.</p>
+		<p>
+			@Model.Exception.Message
+		</p>
+	</div>
+	<div class="alert">
+		<h4>
+			Stack trace:</h4>
+		<br />
+		<pre>@Model.Exception.StackTrace</pre>
+	</div>
+</div>

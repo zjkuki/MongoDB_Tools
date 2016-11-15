@@ -1,8 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.Persist", "MongoDB.Persist\MongoDB.Persist.csproj", "{77B3AA49-E34E-4801-AA7E-1C1E88D07C95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDB.WebIDE", "MongoDB.WebIDE\MongoDB.WebIDE.csproj", "{3095F365-C894-472E-9D1D-CE280C39DAD5}"
