@@ -37,6 +37,7 @@ namespace MongoDB.Component
 
         public List<BsonDocument> GetData(string jsonfind, string jsonsort, int skip, int limit)
         {
+
             var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
             var server = mongo.GetServer();
             var db = server.GetDatabase(Database.Name);                        

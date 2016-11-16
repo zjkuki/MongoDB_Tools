@@ -22,10 +22,13 @@ namespace MongoDB.Component
         /// <returns></returns>
         public override List<MongoTreeNode> GetInfo()
         {
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));            
             var db = server.GetDatabase(Database.Name);
-            var rst = db.RunCommand(new CommandDocument { { "dbstats", 1 } });
+            //var rst = db.RunCommand(new CommandDocument { { "dbstats", 1 } });
+            var rst = db.RunCommand<CommandResult>(new CommandDocument { { "dbstats", 1 } });
 
             var list = new List<MongoTreeNode>();
             if (rst.Ok)

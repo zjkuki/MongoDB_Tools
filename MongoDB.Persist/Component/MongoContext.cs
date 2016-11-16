@@ -11,6 +11,7 @@ using MongoDB.Defination;
 using MongoDB.Driver;
 using MongoDB.Model;
 
+
 namespace MongoDB.Component
 {
     public class MongoContext
@@ -77,10 +78,13 @@ namespace MongoDB.Component
 
                 try
                 {
-                    var mongo = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));
-                    var server = mongo.GetServer();
+                    //kuki改20161116
+                    //var mongo = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));
+                    //var server = mongo.GetServer();
+                    var server = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));
                     var adminDB = server.GetDatabase(MongoConst.AdminDBName);
-                    var rst = adminDB.RunCommand(new CommandDocument { { "listDatabases", 1 } });
+                    //var rst = adminDB.RunCommand(new CommandDocument { { "listDatabases", 1 } });
+                    var rst = adminDB.RunCommand<CommandResult>(new CommandDocument { { "listDatabases", 1 } });
 
                     if (rst.Ok)
                     {

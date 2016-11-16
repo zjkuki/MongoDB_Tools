@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Defination;
 using MongoDB.Driver;
 using MongoDB.Model;
+using System.Collections;
+//using MongoDB.Defination;
+//using MongoDB.Driver;
+//using MongoDB.Model;
 
 namespace MongoDB.Component
 {
@@ -24,12 +29,17 @@ namespace MongoDB.Component
         /// <returns></returns>
         public override List<MongoTreeNode> GetInfo()
         {
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
             var db = server.GetDatabase(Database.Name);
-            var rst = db.RunCommand(new CommandDocument { { "collstats", Table.Name } });
+            //var rst = db.RunCommand(new CommandDocument { { "collstats",Table.Name } });
+            var command = new CommandDocument("collstats", Table.Name);
+            var rst = db.RunCommand<CommandResult>(command);
 
             var list = new List<MongoTreeNode>();
+            
             if (rst.Ok)
             {
                 BuildTreeNode(list, 0, rst.Response);
