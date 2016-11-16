@@ -21,10 +21,15 @@ namespace MongoDB.Component
         {
             var hash = new Hashtable();
 
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
+
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            var db = server.GetDatabase(Database.Name);
             var adminDB = server.GetDatabase(MongoConst.AdminDBName);
-            var stats = adminDB.RunCommand(new CommandDocument { { "ismaster", 1 } });
+            //var stats = adminDB.RunCommand(new CommandDocument { { "ismaster", 1 } });
+            var stats = adminDB.RunCommand<CommandResult>(new CommandDocument { { "ismaster", 1 } });
 
             var serverInfo = new List<MongoTreeNode>();
             var dataInfo = new List<MongoTreeNode>();
@@ -36,8 +41,9 @@ namespace MongoDB.Component
                 var localDB = server.GetDatabase(MongoConst.LocalDBName);
                 if (stats.Response["ismaster"].AsBoolean)
                 {
-                    #region 日志信息
-                    var docs = localDB.GetCollection(MongoConst.OplogTableName).FindAll().SetLimit(10);
+                    #region 日志信息                    
+                    var docs = localDB.GetCollection(MongoConst.OplogTableName);
+                    //docs.FindAll().SetLimit(10);
                     var doc = new BsonDocument();
                     var idx = 0;
                     foreach (var d in docs)

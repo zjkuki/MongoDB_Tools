@@ -16,6 +16,7 @@ namespace MongoDB.Component
 {
     public class MongoContext
     {
+        
         public HashSet<MongoTreeNode> TreeNodes { get; set; }
         public Hashtable MongoObjects { get; set; }
 
@@ -80,11 +81,16 @@ namespace MongoDB.Component
                 {
                     //kuki改20161116
                     //var mongo = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));
-                    //var server = mongo.GetServer();
-                    var server = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));
+                    //var server = mongo.GetServer();                                        
+                    //var server = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));                                                                              
+                    MongoServerAddress addr = new MongoServerAddress(MongoConst.ConnString);
+                    MongoServerSettings setting = new MongoServerSettings();
+                    setting.Server = addr;
+                    
+                    var server = new MongoServer(setting);
                     var adminDB = server.GetDatabase(MongoConst.AdminDBName);
-                    //var rst = adminDB.RunCommand(new CommandDocument { { "listDatabases", 1 } });
-                    var rst = adminDB.RunCommand<CommandResult>(new CommandDocument { { "listDatabases", 1 } });
+                    var rst = adminDB.RunCommand(new CommandDocument { { "listDatabases", 1 } });
+                    //var rst = adminDB.RunCommand<CommandResult>(new CommandDocument { { "listDatabases", 1 } });
 
                     if (rst.Ok)
                     {
@@ -136,6 +142,7 @@ namespace MongoDB.Component
             }
         }
 
+        //private void GetCollection(MongoServer server, uint dbid)
         private void GetCollection(MongoServer server, uint dbid)
         {
             if (MongoObjects.ContainsKey(dbid))
@@ -148,9 +155,11 @@ namespace MongoDB.Component
                 {
                     var db = server.GetDatabase(database.Name);
                     var collections = db.GetCollectionNames();
+                    
                     if (collections != null)
                     {
                         var tblNodes = new HashSet<uint>();
+                        
                         collections.Where(t => !t.Contains("$") && !t.Contains(MongoConst.IndexTableName) && !t.Contains(MongoConst.ProfileTableName)).ToList().ForEach(t =>
                         {
                             var table = db.GetCollection(t);
