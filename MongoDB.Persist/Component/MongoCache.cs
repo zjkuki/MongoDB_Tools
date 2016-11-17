@@ -22,6 +22,7 @@ namespace MongoDB.Component
         public static HashSet<MongoTreeNode> GetTreeNodes()
         {
             var nodes = HttpContext.Current.Cache.Get(NodeKey) as HashSet<MongoTreeNode>;
+                        
             if (nodes == null)
             {
                 var context = new MongoContext();

@@ -23,8 +23,8 @@
     </UpgradeBackupLocation>
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
@@ -230,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\MongoDBWebIDE_Install.pubxml" />
+    <None Include="Properties\PublishProfiles\MongoDBWebIDE_Install_FTP_365yiding.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

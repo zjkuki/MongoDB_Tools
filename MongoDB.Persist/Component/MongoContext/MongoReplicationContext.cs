@@ -25,8 +25,7 @@ namespace MongoDB.Component
             //kuki改20161116
             //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
             //var server = mongo.GetServer();
-            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var db = server.GetDatabase(Database.Name);
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));            
             var adminDB = server.GetDatabase(MongoConst.AdminDBName);
             //var stats = adminDB.RunCommand(new CommandDocument { { "ismaster", 1 } });
             var stats = adminDB.RunCommand<CommandResult>(new CommandDocument { { "ismaster", 1 } });
@@ -42,22 +41,39 @@ namespace MongoDB.Component
                 if (stats.Response["ismaster"].AsBoolean)
                 {
                     #region 日志信息                    
-                    var docs = localDB.GetCollection(MongoConst.OplogTableName);
-                    //docs.FindAll().SetLimit(10);
+                    //var docs = localDB.GetCollection(MongoConst.OplogTableName).FindAll().SetLimit(10);
+                    var docs = localDB.GetCollection<BsonDocument>(MongoConst.OplogTableName);                                        
                     var doc = new BsonDocument();
                     var idx = 0;
-                    foreach (var d in docs)
+
+                    var options = new FindOptions<BsonDocument>
+                    {
+                        CursorType = CursorType.TailableAwait
+                    };
+                    
+                    using (var cursor = docs.FindSync(new BsonDocument(), options)) 
+                     {
+                        foreach(var document in cursor.ToEnumerable())
+                         {
+                             idx++;
+                             doc.Add("日志 No." + idx, document);
+                          }
+                     }
+
+                    /*foreach (var d in docs)
                     {
                         idx++;
                         doc.Add("日志 No." + idx, d);
-                    }
+                    }*/
+
                     BuildTreeNode(dataInfo, 0, doc);
                     #endregion
                 }
                 else
                 {
                     #region 源服务器信息
-                    var doc = localDB.GetCollection(MongoConst.SourceTableName).FindOne();
+                    //var doc = localDB.GetCollection(MongoConst.SourceTableName);
+                    var doc = localDB.GetCollection<BsonDocument>(MongoConst.SourceTableName).Find(new BsonDocument(),null).First();
                     BuildTreeNode(dataInfo, 0, doc);
                     #endregion
                 }

@@ -10,6 +10,7 @@ namespace MongoDB.WebIDE.Controllers
     {
         public ActionResult Index()
         {
+            MongoCache.Clear();
             return View();
         }
 

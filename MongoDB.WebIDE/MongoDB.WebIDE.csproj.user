@@ -4,8 +4,8 @@
     <ProjectView>ProjectFiles</ProjectView>
     <UseIISExpress>false</UseIISExpress>
     <NameOfLastUsedPublishProfile>MongoDBWebIDE_Install</NameOfLastUsedPublishProfile>
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

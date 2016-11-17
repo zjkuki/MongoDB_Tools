@@ -62,11 +62,15 @@ namespace MongoDB.Component
             idxOption.Add("background", model.Background);
             idxOption.Add("dropdups", model.Dropdups);
 
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            //var db = server.GetDatabase(Database.Name);
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
             var db = server.GetDatabase(Database.Name);
 
-            var tbl = db.GetCollection(Table.Name);
+            var tbl = db.GetCollection<BsonDocument>(Table.Name) as MongoCollection;  
+            
             var rst = tbl.CreateIndex(idxDoc, idxOption);
 
             MongoCache.Clear();
@@ -91,12 +95,16 @@ namespace MongoDB.Component
         /// <param name="name"></param>
         public void DeleteIndex(uint id)
         {
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
             var db = server.GetDatabase(Database.Name);
 
             var idx = MongoCache.GetMongoObject(id) as MongoIndexModel;
-            var tbl = db.GetCollection(Table.Name);
+            //var tbl = db.GetCollection(Table.Name);
+            var tbl = db.GetCollection<BsonDocument>(Table.Name) as MongoCollection;
+
             tbl.DropIndex(idx.Keys.Select(k => k.FieldName).ToArray());
 
             MongoCache.Clear();

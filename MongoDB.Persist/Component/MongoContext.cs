@@ -83,7 +83,7 @@ namespace MongoDB.Component
                     //var mongo = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));
                     //var server = mongo.GetServer();                                        
                     //var server = new MongoClient(string.Format(MongoConst.ConnString, serverModel.Name));                                                                              
-                    MongoServerAddress addr = new MongoServerAddress(MongoConst.ConnString);
+                    MongoServerAddress addr = new MongoServerAddress(serverModel.IP,int.Parse(serverModel.Port));
                     MongoServerSettings setting = new MongoServerSettings();
                     setting.Server = addr;
                     

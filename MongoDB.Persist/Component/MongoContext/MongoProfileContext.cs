@@ -21,10 +21,13 @@ namespace MongoDB.Component
 
         public ProfilingLevel GetProfileStatus()
         {
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
-            var db = server.GetDatabase(Database.Name);
-
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            //var db = server.GetDatabase(Database.Name);
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            var db = server.GetDatabase(Database.Name) as MongoDatabase;
+                        
             var rst = db.GetProfilingLevel();
             if (string.IsNullOrEmpty(rst.ErrorMessage))
             {
@@ -42,9 +45,12 @@ namespace MongoDB.Component
 
         public List<ProfileModel> GetProfileData(int limit)
         {
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
-            var db = server.GetDatabase(Database.Name);
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            //var db = server.GetDatabase(Database.Name);
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            var db = server.GetDatabase(Database.Name) as MongoDatabase;
 
             var cursors = db.GetProfilingInfo(Query.Null).SetLimit(limit);
             var list = new List<ProfileModel>();
@@ -86,9 +92,13 @@ namespace MongoDB.Component
 
         public bool SetProfile(int level, int slowms)
         {
-            var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
-            var server = mongo.GetServer();
-            var db = server.GetDatabase(Database.Name);
+            //kuki改20161116
+            //var mongo = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            //var server = mongo.GetServer();
+            //var db = server.GetDatabase(Database.Name);
+            var server = new MongoClient(string.Format(MongoConst.ConnString, Server.Name));
+            var db = server.GetDatabase(Database.Name) as MongoDatabase;
+
 
             CommandResult rst = null;
             if ((ProfilingLevel)level == ProfilingLevel.Slow)
