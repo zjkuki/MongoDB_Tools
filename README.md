@@ -1,36 +1,36 @@
-# MongoDB_Tools��
-���ļ�����Ҫ��MongoDB��صĹ��߼�����ӭʹ��
+# MongoDB_Tools：
+本文件夹主要是MongoDB相关的工具集，欢迎使用
 ============================================================
 
-1��MongoDB.webIDE-GAI
-	��    ����
-	---��Դ�����leexsoft��Դ������޸ġ�
+1、MongoDB.webIDE-GAI
+	概    述：
+	---本源码采用leexsoft的源码进行修改。
 	====================================================
-        ��Ŀ��Դ��
+        项目来源：
 	----https://github.com/leexsoft/.net-MongoDB.WebIDE
 	====================================================
-	��Ŀ�ṹ��
+	项目结构：
 	========================
-	----MongoDB.Persist ����ȡmongodb��Ϣ�ĳ־ò�
+	----MongoDB.Persist ：读取mongodb信息的持久层
 	<br/>
-	----MongoDB.WebIDE  : ��վ�����
+	----MongoDB.WebIDE  : 主站点程序
 
-	ʹ�õļ�����
+	使用的技术：
 	========================
 	<ol>
-	<li>����bootstrap(Version 2.3.2)��mvc��д��MongodbManagementStudio</li>
-	<li>��Ϊʹ��mongodb .net�Ĺٷ�����</li>
-	<li>ʹ����ztree�ؼ�</li>
-	<li>ʹ�ò��м�����ȡmongodb��Ϣ��������������ʱ���̰߳�ȫ����</li>
+	<li>利用bootstrap(Version 2.3.2)和mvc改写的MongodbManagementStudio</li>
+	<li>改为使用mongodb .net的官方驱动</li>
+	<li>使用了ztree控件</li>
+	<li>使用并行技术读取mongodb信息，解决了填充数据时的线程安全问题</li>
 	</ol>
 
-	���ܼ�飺
+	功能简介：
 	========================
 	<ol>
-	<li>�鿴�����������ݿ�����ݱ���ͳ����Ϣ</li>
-	<li>�������ɲ鿴���ӷ���������Ϣ</li>
-	<li>���ݿ�ɲ鿴Profile��Ϣ</li>
-	<li>���ݿ�ɲ鿴�����ݣ���ʱ���ṩ�򵥲鿴��</li>
-	<li>���ݿ�ɽ��м򵥵�ִ�мƻ��鿴</li>
-	<li>���ݱ��ɽ���������Ϣ�鿴��������ɾ���ȹ���</li>
+	<li>查看服务器，数据库和数据表的统计信息</li>
+	<li>服务器可查看主从服务器的信息</li>
+	<li>数据库可查看Profile信息</li>
+	<li>数据库可查看表数据（暂时仅提供简单查看）</li>
+	<li>数据库可进行简单的执行计划查看</li>
+	<li>数据表可进行索引信息查看和新增、删除等管理</li>
 	</ol>
