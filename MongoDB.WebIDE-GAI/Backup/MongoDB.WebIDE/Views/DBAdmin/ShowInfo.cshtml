@@ -1,0 +1,44 @@
+﻿@using MongoDB.WebIDE.Models
+@using MongoDB.Defination
+@model ShowInfoModel
+@section style{
+	<link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/Content/ztree/css/zTreeStyle.css")">
+}
+@section script{
+	<script type="text/javascript">
+		var zNodes = @Html.Raw(Model.JsonData);
+	</script>
+	<script src="@Url.Content("~/Content/ztree/js/jquery.ztree.core-3.5.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Content/js/showinfo.js")" type="text/javascript"></script>
+}
+<div class="PageTitle">
+	<i class="icon-inbox"></i>&nbsp;<strong class="text-info">@Model.Title</strong>
+</div>
+<div class="accordion-heading alert-success mt10">
+	<a class="accordion-toggle">统计信息</a>
+</div>
+<div class="alert-info">
+	<ul id="infotree" class="ztree">
+	</ul>
+</div>
+@if (Model.Type == (int)MongoTreeNodeType.Server)
+{
+	<div class="accordion-heading alert-success">
+		<a class="accordion-toggle" href="ShowReplication?id=@Model.ID">同步信息查看</a>
+	</div>
+}
+else if (Model.Type == (int)MongoTreeNodeType.Database)
+{
+	<div class="accordion-heading alert-success">
+		<a class="accordion-toggle" href="ShowProfile?id=@Model.ID">Profile优化</a>
+	</div>
+}
+else if (Model.Type == (int)MongoTreeNodeType.Collection)
+{
+	<div class="accordion-heading alert-success">
+		<a class="accordion-toggle" href="ShowData?id=@Model.TblFillerID">查看数据</a>
+	</div>
+	<div class="accordion-heading alert-success">
+		<a class="accordion-toggle" href="ShowIndex?id=@Model.IdxFillerID">查看索引</a>
+	</div>
+}

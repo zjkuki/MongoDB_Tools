@@ -1,0 +1,11 @@
+/Lib
+/MongoDB.Driver
+/MongodbManagementStudio
+bin
+obj
+
+*.suo
+
+*.user
+packages
+log

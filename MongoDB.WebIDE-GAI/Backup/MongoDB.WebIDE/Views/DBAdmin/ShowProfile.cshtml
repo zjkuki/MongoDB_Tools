@@ -1,0 +1,109 @@
+﻿@using MongoDB.WebIDE.Models
+@using MongoDB.Driver
+@using MongoDB.Defination
+@model ShowProfileModel
+@section script{
+	<script src="@Url.Content("~/Content/js/showprofile.js")" type="text/javascript"></script>
+}
+<input id="hdId" type="hidden" value="@Model.ID" />
+<div class="PageTitle">
+	<i class="icon-inbox"></i>&nbsp;<strong class="text-info">@Model.Title</strong>
+</div>
+<div class="accordion mt10" id="accordion1">
+	<div class="accordion-group">
+		<div class="accordion-heading alert-success">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">Profile设置</a>
+		</div>
+		<div id="collapseOne" class="accordion-body collapse in">
+			<div class="accordion-inner alert-info">
+				<div class="form-inline">
+					<label class="radio inline">
+						<strong>设置Profile:</strong>
+					</label>
+					<label class="radio inline">
+						<input type="radio" id="cbStatus1" name="status" value="0" @(Model.Status == ProfilingLevel.None ? "checked" : "")>不开启
+					</label>
+					<label class="radio inline">
+						<input type="radio" id="cbStatus2" name="status" value="1" @(Model.Status == ProfilingLevel.Slow ? "checked" : "")>记录慢命令
+					</label>
+					<label class="radio inline">
+						<input type="radio" id="cbStatus3" name="status" value="2" @(Model.Status == ProfilingLevel.All ? "checked" : "")>记录所有命令
+					</label>
+					<label class="radio inline">
+						<strong>慢命令时间：</strong>
+						<input type="text" id="txtSlowms" value="100" class="input-mini" @(Model.Status == ProfilingLevel.Slow ? "" : "disabled") />
+						<a class="btn btn-primary btn-small" id="btnSetProfile">设置</a>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading alert-success">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo">Profile数据</a>
+		</div>
+		<div id="collapseTwo" class="accordion-body collapse">
+			<div class="accordion-inner">
+				<div class="form-inline">
+					<label>
+						显示条数:
+					</label>
+					<input type="text" class="input-mini" id="txtLimit" value="50" />
+					<a class="btn btn-primary btn-small" id="btnShow">显示</a>
+				</div>
+				<table class="table table-bordered table-striped table-hover mt10">
+					<tr>
+						<th>
+							<span class="label label-info">客户端</span>
+						</th>
+						<th>
+							<span class="label label-info">操作</span>
+						</th>
+						<th>
+							<span class="label label-info">操作对象</span>
+						</th>
+						<th>
+							<span class="label label-info">命令</span>
+						</th>
+						<th>
+							<span class="label label-info">时间戳</span>
+						</th>
+						<th>
+							<span class="label label-info">执行时长</span>
+						</th>
+						<th>
+							<span class="label label-info">返回对象数</span>
+						</th>
+						<th>
+							<span class="label label-info">扫描记录数</span>
+						</th>
+						<th>
+							<span class="label label-info">返回结果数</span>
+						</th>
+						<th>
+							<span class="label label-info">结果集大小</span>
+						</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group">
+		<div class="accordion-heading alert-success">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseThree">优化建议</a>
+		</div>
+		<div id="collapseThree" class="accordion-body collapse">
+			<div class="accordion-inner alert">
+				<ol>
+					<li>当【扫描记录数】远大于【返回记录数】，可以考虑通过增加索引来优化查询效率</li>
+					<li>当【返回结果集】过大，那么说明我们返回的结果集太大了，可以考虑只返回所需要的字段</li>
+					<li>如果写查询量或者update量过大的话，多加索引是会有好处的；执行 update 操作时同样检查一下【扫描记录数】，并使用索引减少文档扫描数量</li>
+					<li>如果读操作很少，那么尽量不要添加索引，因为索引越多，写操作会越慢；如果读操作很多，则需要考虑创建合适的索引</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-heading alert-success">
+		<a class="accordion-toggle" href="ShowInfo?id=@Model.ID&type=@((int)MongoTreeNodeType.Database)">返回【统计信息】</a>
+	</div>
+</div>
